@@ -5,13 +5,8 @@ import androidx.annotation.NonNull
 import com.kickstarter.libs.*
 import com.kickstarter.libs.rx.transformers.Transformers.*
 import com.kickstarter.libs.utils.BooleanUtils
-import com.kickstarter.libs.utils.LoginHelper
 import com.kickstarter.libs.utils.ObjectUtils
-<<<<<<< HEAD
-import com.kickstarter.libs.utils.StringUtils
-=======
 import com.kickstarter.libs.utils.extensions.isEmail
->>>>>>> 687de2ebbb2607fc19336db9d49377fdd2b5ccc9
 import com.kickstarter.services.ApiClientType
 import com.kickstarter.services.apiresponses.AccessTokenEnvelope
 import com.kickstarter.services.apiresponses.ErrorEnvelope
