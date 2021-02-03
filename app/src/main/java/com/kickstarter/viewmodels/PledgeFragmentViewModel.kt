@@ -910,7 +910,7 @@ interface PledgeFragmentViewModel {
             pledgeInput
                     .compose<Pair<Double, Pair<Double, Double>>>(combineLatestPair(minAndMaxPledge))
                     .map { it.first in it.second.first..it.second.second }
-                    .map { if (it) R.color.ksr_green_500 else R.color.ksr_red_400 }
+                    .map { if (it) R.color.kds_create_700 else R.color.kds_alert }
                     .distinctUntilChanged()
                     .compose(bindToLifecycle())
                     .subscribe(this.pledgeTextColor)
@@ -1304,34 +1304,6 @@ interface PledgeFragmentViewModel {
                     .filter { it == PledgeReason.PLEDGE }
                     .compose<Pair<PledgeReason, Pair<Project, Double>>>(combineLatestPair(projectAndTotal))
                     .map { it.second }
-
-            projectAndTotalForInitialPledges
-                    .take(1)
-                    .map { it.first }
-                    .compose(bindToLifecycle())
-                    .subscribe { this.koala.trackPledgeScreenViewed(it) }
-
-            projectAndTotalForInitialPledges
-                    .compose<Pair<Project, Double>>(takeWhen(this.newCardButtonClicked))
-                    .compose(bindToLifecycle())
-                    .subscribe { this.koala.trackAddNewCardButtonClicked(it.first, it.second) }
-
-            projectAndTotalForInitialPledges
-                    .compose<Pair<Project, Double>>(takeWhen(this.pledgeButtonClicked))
-                    .compose(bindToLifecycle())
-                    .subscribe { this.koala.trackPledgeButtonClicked(it.first, it.second) }
-
-            projectAndTotal
-                    .compose<Pair<Project, Double>>(takeWhen(updatePledgeClick))
-                    .compose(bindToLifecycle())
-                    .subscribe { this.koala.trackUpdatePledgeButtonClicked(it.first, it.second) }
-
-            project
-                    .compose<Project>(takeWhen(updatePaymentClick))
-                    .compose<Pair<Project, PledgeReason>>(combineLatestPair(pledgeReason))
-                    .filter { it.second == PledgeReason.UPDATE_PAYMENT }
-                    .compose(bindToLifecycle())
-                    .subscribe { this.koala.trackUpdatePaymentMethodButtonClicked(it.first) }
 
             pledgeData
                     .take(1)

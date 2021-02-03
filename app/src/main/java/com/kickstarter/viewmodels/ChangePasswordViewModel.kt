@@ -6,7 +6,7 @@ import com.kickstarter.R
 import com.kickstarter.libs.ActivityViewModel
 import com.kickstarter.libs.Environment
 import com.kickstarter.libs.rx.transformers.Transformers.*
-import com.kickstarter.libs.utils.StringUtils.MINIMUM_PASSWORD_LENGTH
+import com.kickstarter.libs.utils.extensions.MINIMUM_PASSWORD_LENGTH
 import com.kickstarter.services.ApolloClientType
 import com.kickstarter.ui.activities.ChangePasswordActivity
 import rx.Observable
@@ -97,12 +97,7 @@ interface ChangePasswordViewModel {
             changePasswordNotification
                     .compose(values())
                     .map { it.updateUserAccount()?.user()?.email() }
-                    .subscribe {
-                        this.success.onNext(it)
-                        this.koala.trackChangedPassword()
-                    }
-
-            this.koala.trackViewedChangedPassword()
+                    .subscribe { this.success.onNext(it) }
         }
 
         private fun submit(changePassword: ChangePasswordViewModel.ViewModel.ChangePassword): Observable<UpdateUserPasswordMutation.Data> {

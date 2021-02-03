@@ -12,6 +12,7 @@ import com.kickstarter.R
 import com.kickstarter.libs.KSCurrency
 import com.kickstarter.libs.KSString
 import com.kickstarter.libs.models.Country
+import com.kickstarter.libs.utils.extensions.trimAllWhitespace
 import com.kickstarter.models.Project
 import com.kickstarter.models.Reward
 import java.math.RoundingMode
@@ -62,7 +63,7 @@ object RewardViewUtils {
         val country = Country.findByCurrencyCode(project.currency()) ?: return spannableString
 
         val currencyNeedsCode = ksCurrency.currencyNeedsCode(country, true)
-        val currencySymbolToDisplay = StringUtils.trim(ksCurrency.getCurrencySymbol(country, true))
+        val currencySymbolToDisplay = ksCurrency.getCurrencySymbol(country, true).trimAllWhitespace()
 
         if (currencyNeedsCode) {
             val startOfSymbol = formattedCurrency.indexOf(currencySymbolToDisplay)
@@ -83,7 +84,7 @@ object RewardViewUtils {
         val numberGreenCharacters = quantity.toString().length + symbol.length
         val spannable = SpannableString(quantity.toString() + symbol + title)
         spannable.setSpan(
-                ForegroundColorSpan(context.getColor(R.color.ksr_green_500)),
+                ForegroundColorSpan(context.getColor(R.color.kds_create_700)),
                 0, numberGreenCharacters,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         return spannable

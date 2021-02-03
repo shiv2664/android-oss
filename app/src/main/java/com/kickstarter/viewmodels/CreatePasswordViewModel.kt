@@ -6,7 +6,7 @@ import com.kickstarter.R
 import com.kickstarter.libs.ActivityViewModel
 import com.kickstarter.libs.Environment
 import com.kickstarter.libs.rx.transformers.Transformers.*
-import com.kickstarter.libs.utils.StringUtils.MINIMUM_PASSWORD_LENGTH
+import com.kickstarter.libs.utils.extensions.MINIMUM_PASSWORD_LENGTH
 import com.kickstarter.services.ApolloClientType
 import com.kickstarter.ui.activities.CreatePasswordActivity
 import rx.Observable
@@ -92,12 +92,7 @@ interface CreatePasswordViewModel {
             createNewPasswordNotification
                     .compose(values())
                     .map { it.updateUserAccount()?.user()?.email() }
-                    .subscribe {
-                        this.success.onNext(it)
-                        this.koala.trackCreatedPassword()
-                    }
-
-            this.koala.trackViewedCreatedPassword()
+                    .subscribe { this.success.onNext(it) }
         }
 
         private fun submit(createPassword: CreatePasswordViewModel.ViewModel.CreatePassword): Observable<CreatePasswordMutation.Data> {
