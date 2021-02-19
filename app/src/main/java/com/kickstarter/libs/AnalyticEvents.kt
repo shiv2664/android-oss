@@ -8,11 +8,12 @@ import com.kickstarter.libs.utils.EventContext.CtaContextName.PLEDGE_SUBMIT
 import com.kickstarter.libs.utils.EventContext.CtaContextName.REWARD_CONTINUE
 import com.kickstarter.libs.utils.EventName
 import com.kickstarter.libs.utils.AnalyticEventsUtils
-import com.kickstarter.libs.utils.EventContext
 import com.kickstarter.libs.utils.EventContext.PageViewedContextName.ADD_ONS
+import com.kickstarter.libs.utils.EventContext.PageViewedContextName.REWARDS
 import com.kickstarter.libs.utils.EventContext.ContextPropertyName.CONTEXT_CTA
 import com.kickstarter.libs.utils.EventContext.ContextPropertyName.CONTEXT_TYPE
 import com.kickstarter.libs.utils.EventContext.ContextPropertyName.CONTEXT_PAGE
+import com.kickstarter.libs.utils.EventContext.PageViewedContextName
 import com.kickstarter.libs.utils.EventContext.PageViewedContextName.CHECKOUT
 import com.kickstarter.libs.utils.ExperimentData
 import com.kickstarter.models.Activity
@@ -737,6 +738,17 @@ class AnalyticEvents(trackingClients: List<TrackingClientType?>) {
         val props: HashMap<String, Any> = hashMapOf(CONTEXT_CTA.contextName to ADD_ONS_CONTINUE.contextName)
         props.putAll(AnalyticEventsUtils.pledgeDataProperties(pledgeData, client.loggedInUser()))
         client.track(EventName.CTA_CLICKED.eventName, props)
+    }
+
+    /**
+     * Sends data to the client when the rewards carousel is loaded.
+     *
+     * @param pledgeData: The selected pledge data.
+     */
+    fun trackRewardsCarouselViewed(projectData: ProjectData) {
+        val props: HashMap<String, Any> = hashMapOf(CONTEXT_PAGE.contextName to REWARDS.contextName)
+        props.putAll(AnalyticEventsUtils.projectProperties(projectData.project(), client.loggedInUser()))
+        client.track(EventName.PAGE_VIEWED.eventName, props)
     }
 
     //endregion
